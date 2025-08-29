@@ -1,0 +1,53 @@
+name: App1 Bug
+description: Report issues extension
+title: "[App1 Bug]: "
+labels: ["bug", "app1"]
+body:
+  - type: markdown
+    attributes:
+      value: '# App1 Bug'
+  - type: markdown
+    attributes:
+      value: |
+        specific instructions or information for the issue.
+        Read more at [Google](google.com)
+  - type: input
+    id: app1-input1
+    attributes:
+      label: Input 1
+      description: "important input 1"
+      placeholder: "input1 place holder"
+    validations:
+      required: true
+  - type: input
+    id: app1-input2
+    attributes:
+      label: Input 2
+      description: "important input 2"
+      placeholder: "input2 place holder"
+    validations:
+      required: true
+  - type: input
+    id: app1-input3
+    attributes:
+      label: Input 3
+      description: "important input 3"
+      placeholder: "input3 place holder"
+    validations:
+      required: true
+  - type: input
+    id: app1-input4
+    attributes:
+      label: Input 4
+      description: "important input 4"
+      placeholder: "input4 place holder"
+    validations:
+      required: true
+  - type: input
+    id: app1-input5
+    attributes:
+      label: Input 5
+      description: "important input 5"
+      placeholder: "input5 place holder"
+    validations:
+      required: true
