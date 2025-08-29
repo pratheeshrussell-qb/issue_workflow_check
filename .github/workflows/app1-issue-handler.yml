@@ -2,7 +2,7 @@ name: app1-issue-handler
 
 on:
   repository_dispatch:
-    types: [build]
+    types: [app1-issue-handler]
     
 jobs:
   build:
