@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       issue_number:
+        description: 'Issue number to process'
         required: true
 permissions:
   contents: read
@@ -21,12 +22,30 @@ jobs:
           issue=$(gh api repos/${{ github.repository }}/issues/${{ github.event.inputs.issue_number }})
           echo "issue_body=$(jq -c '[.body]' <<< "$issue")" >> $GITHUB_OUTPUT
         # body will be in md and has to be parsed
-      - run: |
-          echo "🏗️ Build triggered from Issue #${{ github.event.inputs.issue_number }}"
-          echo "Title: ${{ github.event.inputs.issue_title }}"
-          echo "Body: ${{ steps.issue.outputs.issue_body }}"
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Parse Issue
+        id: parser
+        uses: issue-ops/parser@v4.2.0
+        with:
+          body: ${{ steps.issue.outputs.issue_body }}
+          issue-form-template: 01-app1-issues.yml
+      - name: Output Issue JSON
+        id: output-issue
+        run: echo ${{ steps.parser.outputs.json }}
+      - name: Export JSON keys as env vars
+        run: |
+          echo "${{ steps.parser.outputs.json }}" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' >> $GITHUB_ENV
+      
+      - name: Process Issue Data
+        run: |
+          echo "App1 Input 1: $app1-input1"
+          echo "App1 Input 2: $app1-input2"
+          echo "App1 Input 3: $app1-input3"
+          echo "App1 Input 4: $app1-input4"
+          echo "App1 Input 5: $app1-input5"
+      
       - name: Comment and Close Issue
         run: |
           ISSUE_NUMBER="${{ github.event.inputs.issue_number }}"
