@@ -1,0 +1,24 @@
+name: issue-router
+
+on:
+  issues:
+    types: [opened, labeled]
+    
+jobs:
+  route:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract labels
+        id: labels
+        run: |
+          echo "labels=$(jq -c '[.issue.labels[].name]' <<< '${{ toJson(github.event) }}')" >> $GITHUB_OUTPUT
+      - name: Trigger Build workflow
+        if: contains(steps.labels.outputs.labels, '"bug"') && contains(steps.labels.outputs.labels, '"app1"') 
+        run: |
+          gh api repos/${{ github.repository }}/dispatches \
+            -f event_type=app1-issue-handler \
+            -f client_payload='{
+              "issue_number": "${{ github.event.issue.number }}",
+              "issue_title": "${{ github.event.issue.title }}",
+              "issue_body": "${{ github.event.issue.body }}"
+            }'
