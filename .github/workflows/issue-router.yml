@@ -3,6 +3,10 @@ name: issue-router
 on:
   issues:
     types: [opened]
+permissions:
+  contents: read
+  issues: read
+  actions: write
 
 jobs:
   route:
