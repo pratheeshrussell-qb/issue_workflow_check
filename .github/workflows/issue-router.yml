@@ -29,9 +29,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           jq -n --arg num "${{ github.event.issue.number }}" \
-                --arg title "${{ github.event.issue.title }}" \
-                --arg body "${{ github.event.issue.body }}" \
-                '{ref:"main", inputs:{issue_number:$num, issue_title:$title, issue_body:$body}}' \
+                '{ref:"main", inputs:{issue_number:$num}}' \
           > dispatch.json
 
           gh api repos/${{ github.repository }}/actions/workflows/app1-issue-handler.yml/dispatches \
