@@ -3,17 +3,18 @@ name: issue-router
 on:
   issues:
     types: [opened]
-    
+
 jobs:
   route:
     runs-on: ubuntu-latest
     steps:
       - name: Wait 10s for labels to be applied
         run: sleep 10
+
       - name: Get updated issue with labels
+        id: issue
         env:
           GH_TOKEN: ${{ github.token }}
-        id: issue
         run: |
           issue=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }})
           echo "labels=$(jq -c '[.labels[].name]' <<< "$issue")" >> $GITHUB_OUTPUT
@@ -23,10 +24,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api repos/${{ github.repository }}/dispatches \
-            -f event_type=app1-issue-handler \
-            -f client_payload='{
-              "issue_number": "${{ github.event.issue.number }}",
-              "issue_title": "${{ github.event.issue.title }}",
-              "issue_body": "${{ github.event.issue.body }}"
-            }'
+          gh api repos/${{ github.repository }}/actions/workflows/app1-issue-handler.yml/dispatches \
+            -f ref=main \
+            -f inputs.issue_number="${{ github.event.issue.number }}" \
+            -f inputs.issue_title="${{ github.event.issue.title }}" \
+            -f inputs.issue_body="${{ github.event.issue.body }}"
