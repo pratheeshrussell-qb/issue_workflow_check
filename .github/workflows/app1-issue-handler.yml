@@ -7,14 +7,13 @@ on:
         required: true
 permissions:
   contents: read
-  issues: read
+  issues: write
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait 10s for labels to be applied
-        run: sleep 10
-      - name: Get updated issue
+    # passing body as input may have character limitations
+      - name: Get issue details
         id: issue
         env:
           GH_TOKEN: ${{ github.token }}
