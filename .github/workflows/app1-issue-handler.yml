@@ -5,7 +5,9 @@ on:
     inputs:
       issue_number:
         required: true
-
+permissions:
+  contents: read
+  issues: read
 jobs:
   build:
     runs-on: ubuntu-latest
