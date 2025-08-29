@@ -38,7 +38,7 @@ jobs:
         uses: issue-ops/parser@v4.2.0
         with:
           body: ${{ steps.issue.outputs.issue_body }}
-          # issue-form-template: 01-app1-issues.yml
+          issue-form-template: 01-app1-issues.yml
       - name: Output Issue JSON
         id: output-issue
         run: echo ${{ steps.parser.outputs.json }}
