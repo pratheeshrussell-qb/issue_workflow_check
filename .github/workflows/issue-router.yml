@@ -8,12 +8,16 @@ jobs:
   route:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract labels
-        id: labels
+      - name: Wait 10s for labels to be applied
+        run: sleep 10
+      - name: Get updated issue with labels
+        id: issue
         run: |
-          echo "labels=$(jq -c '[.issue.labels[].name]' <<< '${{ toJson(github.event) }}')" >> $GITHUB_OUTPUT
+          issue=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }})
+          echo "labels=$(jq -c '[.labels[].name]' <<< "$issue")" >> $GITHUB_OUTPUT
+
       - name: Trigger Build workflow
-        if: contains(steps.labels.outputs.labels, '"bug"') && contains(steps.labels.outputs.labels, '"app1"') 
+        if: contains(steps.issue.outputs.labels, '"bug"') && contains(steps.issue.outputs.labels, '"app1"')
         run: |
           gh api repos/${{ github.repository }}/dispatches \
             -f event_type=app1-issue-handler \
