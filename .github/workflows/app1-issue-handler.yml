@@ -20,7 +20,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           issue=$(gh api repos/${{ github.repository }}/issues/${{ github.event.inputs.issue_number }})
-          echo "issue_body=$(jq -c '[.body]' <<< "$issue")" >> $GITHUB_OUTPUT
+          echo "issue_body=$(jq -c '.body' <<< "$issue")" >> $GITHUB_OUTPUT
         # body will be in md and has to be parsed
       - name: Checkout repo
         uses: actions/checkout@v4
