@@ -20,19 +20,24 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           issue=$(gh api repos/${{ github.repository }}/issues/${{ github.event.inputs.issue_number }})
-          echo "issue_body=$(jq -r '.body' <<< "$issue")" >> $GITHUB_OUTPUT
-          echo "issue_json=$issue" >> $GITHUB_OUTPUT
+          body=$(jq -r '.body' <<< "$issue")
+
+          {
+            echo "issue_body<<EOF"
+            echo "$body"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
         # body will be in md and has to be parsed
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Echo output
-        run: echo "${{ steps.issue.outputs.issue_json.body }}"
+        run: echo "${{ steps.issue.outputs.issue_body }}"
 
       - name: Parse Issue
         id: parser
         uses: issue-ops/parser@v4.2.0
         with:
-          body: ${{ steps.issue.outputs.issue_json.body }}
+          body: ${{ steps.issue.outputs.issue_body }}
           # issue-form-template: 01-app1-issues.yml
       - name: Output Issue JSON
         id: output-issue
