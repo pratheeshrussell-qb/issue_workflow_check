@@ -44,7 +44,7 @@ jobs:
         run: echo ${{ steps.parser.outputs.json }}
       - name: Export JSON keys as env vars
         run: |
-          echo "${{ steps.parser.outputs.json }}" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' >> $GITHUB_ENV
+          echo '${{ steps.parser.outputs.json }}'' | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' >> $GITHUB_ENV
       
       - name: Process Issue Data
         run: |
