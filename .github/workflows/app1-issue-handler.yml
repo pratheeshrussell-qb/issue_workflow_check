@@ -48,11 +48,11 @@ jobs:
       
       - name: Process Issue Data
         run: |
-          echo "App1 Input 1: $app1-input1"
-          echo "App1 Input 2: $app1-input2"
-          echo "App1 Input 3: $app1-input3"
-          echo "App1 Input 4: $app1-input4"
-          echo "App1 Input 5: $app1-input5"
+          echo "App1 Input 1: $app1_input1"
+          echo "App1 Input 2: $app1_input2"
+          echo "App1 Input 3: $app1_input3"
+          echo "App1 Input 4: $app1_input4"
+          echo "App1 Input 5: $app1_input5"
       
       - name: Comment and Close Issue
         run: |
