@@ -25,6 +25,8 @@ jobs:
           echo "🏗️ Build triggered from Issue #${{ github.event.inputs.issue_number }}"
           echo "Title: ${{ github.event.inputs.issue_title }}"
           echo "Body: ${{ steps.issue.outputs.issue_body }}"
+      - name: Checkout repo
+        uses: actions/checkout@v4
       - name: Comment and Close Issue
         run: |
           ISSUE_NUMBER="${{ github.event.inputs.issue_number }}"
