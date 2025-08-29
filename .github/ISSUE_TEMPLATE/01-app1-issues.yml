@@ -14,7 +14,7 @@ body:
   - type: input
     id: app1-input1
     attributes:
-      label: Input 1
+      label: app1-input1
       description: "important input 1"
       placeholder: "input1 place holder"
     validations:
@@ -22,7 +22,7 @@ body:
   - type: input
     id: app1-input2
     attributes:
-      label: Input 2
+      label: app1-input2
       description: "important input 2"
       placeholder: "input2 place holder"
     validations:
@@ -30,7 +30,7 @@ body:
   - type: input
     id: app1-input3
     attributes:
-      label: Input 3
+      label: app1-input3
       description: "important input 3"
       placeholder: "input3 place holder"
     validations:
@@ -38,7 +38,7 @@ body:
   - type: input
     id: app1-input4
     attributes:
-      label: Input 4
+      label: app1-input4
       description: "important input 4"
       placeholder: "input4 place holder"
     validations:
@@ -46,7 +46,7 @@ body:
   - type: input
     id: app1-input5
     attributes:
-      label: Input 5
+      label: app1-input5
       description: "important input 5"
       placeholder: "input5 place holder"
     validations:
