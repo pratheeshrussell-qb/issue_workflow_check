@@ -25,3 +25,14 @@ jobs:
           echo "🏗️ Build triggered from Issue #${{ github.event.inputs.issue_number }}"
           echo "Title: ${{ github.event.inputs.issue_title }}"
           echo "Body: ${{ steps.issue.outputs.issue_body }}"
+      - name: Comment and Close Issue
+        run: |
+          ISSUE_NUMBER="${{ github.event.inputs.issue_number }}"
+
+          # Comment on the issue
+          gh issue comment "$ISSUE_NUMBER" --body "Thanks for the report! This issue is now being closed. ✅"
+
+          # Close the issue
+          gh issue close "$ISSUE_NUMBER"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
