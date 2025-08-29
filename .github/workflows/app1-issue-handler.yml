@@ -24,6 +24,8 @@ jobs:
         # body will be in md and has to be parsed
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Echo output
+        run: echo "${{ steps.issue.outputs.issue_body }}"
 
       - name: Parse Issue
         id: parser
